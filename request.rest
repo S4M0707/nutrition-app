@@ -1,0 +1,18 @@
+POST http://localhost:8000/nutrition_app/v1/auth/register
+content-type: application/json
+
+{
+    "username": "sample",
+    "email": "sam.smith0241@gmail.com",
+    "password": "applemango123"
+}
+
+###
+
+POST http://localhost:8000/nutrition_app/v1/auth/login
+content-type: application/json
+
+{
+    "email": "apple.mango@gmail.com",
+    "password": "applemango123"
+}

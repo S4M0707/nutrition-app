@@ -5,8 +5,8 @@ const API_KEY = process.env.FDC_API_KEY;
 const API_LIST_LINK = `https://api.nal.usda.gov/fdc/v1/foods/list?api_key=${API_KEY}`;
 const API_SEARCH_LINK = `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${API_KEY}&query=`;
 
-export default class Foods {
-    static async getList(req, res, next) {
+export default class FoodList {
+    static async getList(req, res) {
         try {
             let response = await fetch(API_LIST_LINK);
             
@@ -22,7 +22,7 @@ export default class Foods {
         }
     }
 
-    static async getFoodByName(req, res, next) {
+    static async getFoodByName(req, res) {
         try {
             let name = req.params.name;
             let response = await fetch(API_SEARCH_LINK + encodeURIComponent(name));
@@ -39,7 +39,7 @@ export default class Foods {
         }
     }
 
-    static async getFoodById(req, res, next) {
+    static async getFoodById(req, res) {
         try {
             let id = req.params.id;
             const API_FOOD_ELEMENT = `https://api.nal.usda.gov/fdc/v1/food/${id}?api_key=${API_KEY}`;

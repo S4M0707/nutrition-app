@@ -9,11 +9,12 @@ export default class FoodList {
     static async getList(req, res) {
         try {
             let response = await fetch(API_LIST_LINK);
-            
+
             if (!response.ok) {
                 res.status(404).json({ error: "Not found" });
                 return;
             }
+
             let foods = await response.json();
             res.json(foods.slice(1));
         } catch (e) {
@@ -26,11 +27,12 @@ export default class FoodList {
         try {
             let name = req.params.name;
             let response = await fetch(API_SEARCH_LINK + encodeURIComponent(name));
-            
+
             if (!response.ok) {
                 res.status(404).json({ error: "Not found" });
                 return;
             }
+
             let foods = await response.json();
             res.json(foods['foods']);
         } catch (e) {
@@ -45,11 +47,12 @@ export default class FoodList {
             const API_FOOD_ELEMENT = `https://api.nal.usda.gov/fdc/v1/food/${id}?api_key=${API_KEY}`;
 
             let response = await fetch(API_FOOD_ELEMENT);
-            
+
             if (!response.ok) {
                 res.status(404).json({ error: "Not found" });
                 return;
             }
+            
             let food = await response.json();
             res.json(food);
         } catch (e) {

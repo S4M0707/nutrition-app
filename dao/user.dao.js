@@ -1,4 +1,5 @@
 import bcryptjs from 'bcryptjs';
+import { ObjectId } from "mongodb";
 
 export default class UserDAO {
     static user;
@@ -15,9 +16,18 @@ export default class UserDAO {
 
     static async findUserByEmail(email) {
         try {
-            return await this.user.findOne({email: email});
+            return await this.user.findOne({ email: email });
         } catch (e) {
             console.error(`Unable to get email: ${e}`)
+            return { error: e }
+        }
+    }
+
+    static async findUserById(id) {
+        try {
+            return await this.user.findOne({ _id: new ObjectId(id) });
+        } catch (e) {
+            console.error(`Unable to get id: ${e}`)
             return { error: e }
         }
     }

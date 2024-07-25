@@ -1,4 +1,8 @@
+import dotenv from 'dotenv';
+import jsonwebtoken from 'jsonwebtoken';
 import UserDAO from "../dao/user.dao.js";
+
+dotenv.config();
 
 export default class Auth {
     static async register(req, res, next) {
@@ -36,13 +40,11 @@ export default class Auth {
             if (!isMatch) {
               return res.status(400).json({ error: 'Invalid password' });
             }
-
-            res.json(isMatch);
         
-            // const payload = { userId: user._id };
-            // const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+            const payload = { userId: user._id };
+            const token = jsonwebtoken.sign(payload, process.env.JWT_ACCESS_TOKEN);
         
-            // res.json({ token });
+            res.json({ token: token });
         } catch (e) {
             res.status(500).json({ error: 'Server error' });
         }

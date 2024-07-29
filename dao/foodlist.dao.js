@@ -1,5 +1,4 @@
 import mongodb from 'mongodb';
-const ObjectId = mongodb.ObjectId;
 
 let foodLists;
 
@@ -16,11 +15,11 @@ export default class FoodListDAO {
     static async addFoodToList(userId, foodId) {
         try {
             const result = await foodLists.updateOne(
-                { userId: ObjectId(userId) },
-                { $push: { foods: foodId } },
+                { userId: new mongodb.ObjectId(userId) },
+                { $push: { foods: new mongodb.Int32(foodId) } },
                 { upsert: true }
             );
-            return { success: true };
+            return { success: true, foodId: foodId };
         } catch (e) {
             console.error(`Error adding food to list: ${e}`);
             return { error: e };
@@ -30,7 +29,7 @@ export default class FoodListDAO {
     static async removeFoodFromList(userId, foodId) {
         try {
             const result = await foodLists.updateOne(
-                { userId: ObjectId(userId) },
+                { userId: new mongodb.ObjectId(userId) },
                 { $pull: { foods: foodId } }
             );
             return { success: true };
@@ -42,7 +41,7 @@ export default class FoodListDAO {
 
     static async getFoodItemsByUserId(userId) {
         try {
-            const foodList = await foodLists.findOne({ userId: ObjectId(userId) });
+            const foodList = await foodLists.findOne({ userId: new mongodb.ObjectId(userId) });
             return foodList ? foodList.foods : [];
         } catch (e) {
             console.error(`Error getting food items by user ID: ${e}`);

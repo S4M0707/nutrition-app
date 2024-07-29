@@ -23,5 +23,10 @@ content-type: application/json
 
 ###
 
-GET http://localhost:8000/nutrition_app/v1/foodlist/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmExNDNiZDlkMTcyMTM1YmQ5NDc4YmUiLCJpYXQiOjE3MjIwOTY3NzgsImV4cCI6MTcyMjA5NzY3OH0.PH7bUlPOVCEsyAXg_MfOtaZm78gzkPW7u0TyyIR63Ew
+POST http://localhost:8000/nutrition_app/v1/foodlist/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmExNDNiZDlkMTcyMTM1YmQ5NDc4YmUiLCJpYXQiOjE3MjIyODE1MjYsImV4cCI6MTcyMjI4MjQyNn0.qhL4YfQJsek-r94H8I8hWB9suLF2B3qQQ9J6tuARNTM
+content-type: application/json
+
+{
+    "foodId": 2341752
+}

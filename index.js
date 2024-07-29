@@ -2,6 +2,7 @@ import app from "./server.js";
 import mongodb from "mongodb";
 import dotenv from 'dotenv';
 import UserDAO from "./dao/user.dao.js";
+import FoodListDAO from "./dao/foodlist.dao.js";
 
 dotenv.config();
 const uri = process.env.MONGODB_URI;
@@ -18,6 +19,7 @@ MongoClient.connect(uri, {
     process.exit(1);
 }).then(async client => {
     await UserDAO.injectDB(client);
+    await FoodListDAO.injectDB(client);
     app.listen(port, () => {
         console.log(`Listening port: ${port}`)
     })

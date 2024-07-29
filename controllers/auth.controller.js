@@ -40,11 +40,10 @@ export default class Auth {
             if (!isMatch) {
               return res.status(400).json({ error: 'Invalid password' });
             }
-        
+
             const payload = { userId: user._id };
-            const token = jsonwebtoken.sign(payload, process.env.JWT_ACCESS_TOKEN);
-        
-            res.json({ token: token });
+            const accessToken = jsonwebtoken.sign(payload, process.env.JWT_ACCESS_TOKEN, { expiresIn: '15m' });        
+            res.json({ accessToken: accessToken });
         } catch (e) {
             res.status(500).json({ error: 'Server error' });
         }

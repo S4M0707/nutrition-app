@@ -1,63 +1,49 @@
-import dotenv from 'dotenv';
-
-dotenv.config();
-const API_KEY = process.env.FDC_API_KEY;
-const API_LIST_LINK = `https://api.nal.usda.gov/fdc/v1/foods/list?api_key=${API_KEY}`;
-const API_SEARCH_LINK = `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${API_KEY}&query=`;
+import FoodListDAO from "../dao/foodlist.dao.js";
 
 export default class FoodList {
-    static async getList(req, res) {
+    static async addFoodItem(req, res, next) {
         try {
-            let response = await fetch(API_LIST_LINK);
+            const userId = req.user._id;
+            const foodId = req.body.foodId;
 
-            if (!response.ok) {
-                res.status(404).json({ error: "Not found" });
+            const result = await FoodListDAO.addFoodToList(userId, foodId);
+
+            if (result.error) {
+                res.status(500).json({ error: result.error });
                 return;
             }
 
-            let foods = await response.json();
-            res.json(foods.slice(1));
+            res.status(201).json({ success: true });
         } catch (e) {
-            console.log(`api, ${e}`);
-            res.status(500).json({ error: e });
+            res.status(500).json({ error: "Error in adding food item" });
         }
     }
 
-    static async getFoodByName(req, res) {
+    static async deleteFoodItem(req, res, next) {
         try {
-            let name = req.params.name;
-            let response = await fetch(API_SEARCH_LINK + encodeURIComponent(name));
+            const userId = req.user._id;
+            const foodId = req.params.id;
 
-            if (!response.ok) {
-                res.status(404).json({ error: "Not found" });
+            const result = await FoodListDAO.removeFoodFromList(userId, foodId);
+
+            if (result.error) {
+                res.status(500).json({ error: result.error });
                 return;
             }
 
-            let foods = await response.json();
-            res.json(foods['foods']);
+            res.status(200).json({ success: true });
         } catch (e) {
-            console.log(`api, ${e}`);
-            res.status(500).json({ error: e });
+            res.status(500).json({ error: "Error in deleting food item" });
         }
     }
 
-    static async getFoodById(req, res) {
+    static async getAllFoodItems(req, res, next) {
         try {
-            let id = req.params.id;
-            const API_FOOD_ELEMENT = `https://api.nal.usda.gov/fdc/v1/food/${id}?api_key=${API_KEY}`;
-
-            let response = await fetch(API_FOOD_ELEMENT);
-
-            if (!response.ok) {
-                res.status(404).json({ error: "Not found" });
-                return;
-            }
-            
-            let food = await response.json();
-            res.json(food);
+            const userId = req.user._id;
+            const foodItems = await FoodListDAO.getFoodItemsByUserId(userId);
+            res.json(foodItems);
         } catch (e) {
-            console.log(`api, ${e}`);
-            res.status(500).json({ error: e });
+            res.status(500).json({ error: "Error in getting food items" });
         }
     }
 }

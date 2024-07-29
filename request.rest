@@ -1,3 +1,7 @@
+GET http://localhost:8000/nutrition_app/v1/food/list
+
+###
+
 POST http://localhost:8000/nutrition_app/v1/auth/register
 content-type: application/json
 
@@ -19,8 +23,5 @@ content-type: application/json
 
 ###
 
-POST http://localhost:8000/nutrition_app/v1/foodlist/add
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmExNDNiZDlkMTcyMTM1YmQ5NDc4YmUiLCJpYXQiOjE3MjE5MDAwODV9.rJhJnyx9gR_gajceqFIOcsKdMG81qMMsUbzxOqzkP4I
-
-{
-}
+GET http://localhost:8000/nutrition_app/v1/foodlist/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmExNDNiZDlkMTcyMTM1YmQ5NDc4YmUiLCJpYXQiOjE3MjIwOTY3NzgsImV4cCI6MTcyMjA5NzY3OH0.PH7bUlPOVCEsyAXg_MfOtaZm78gzkPW7u0TyyIR63Ew
